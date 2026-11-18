@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="以 WebGPU 在瀏覽器本機執行的陳威倫 1 號政見小幫手。"
+    />
+    <title>政見小幫手｜陳威倫 1 號</title>
+    <script type="module" crossorigin src="./assets/index-Bk1KvhAi.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BJPS4Sdx.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <a class="back-link" href="/">← 返回候選人介紹</a>
+
+      <header class="page-header">
+        <p class="eyebrow">陳威倫・1 號候選人</p>
+        <h1>政見小幫手</h1>
+        <p class="subtitle">想了解威倫的政見？直接問問看。</p>
+      </header>
+
+      <section class="model-card" aria-labelledby="model-title">
+        <div>
+          <p class="section-kicker">瀏覽器端 AI</p>
+          <h2 id="model-title">Qwen2.5 1.5B</h2>
+          <p class="model-description">
+            使用 WebGPU 在你的瀏覽器本機運算。模型第一次載入需下載約 1–2 GB，
+            之後可由瀏覽器快取重用。
+          </p>
+        </div>
+        <button id="load-model" class="primary-button" type="button" disabled>
+          載入 AI 模型
+        </button>
+        <div id="progress-panel" class="progress-panel" hidden>
+          <div class="progress-heading">
+            <span id="status" role="status" aria-live="polite">準備載入模型……</span>
+            <span id="progress-percent">0%</span>
+          </div>
+          <progress id="download-progress" max="100" value="0">
+            0%
+          </progress>
+          <p id="progress-detail" class="progress-detail"></p>
+        </div>
+        <p id="compatibility" class="compatibility" role="status" aria-live="polite">
+          正在檢查瀏覽器的 WebGPU 支援……
+        </p>
+      </section>
+
+      <section class="chat-card" aria-labelledby="chat-title">
+        <div class="chat-heading">
+          <div>
+            <p class="section-kicker">對話只在本機進行</p>
+            <h2 id="chat-title">和政見小幫手聊天</h2>
+          </div>
+          <button id="clear-chat" class="text-button" type="button">
+            清除對話
+          </button>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <form id="chat-form" class="chat-form">
+          <label class="sr-only" for="chat-input">輸入你的問題</label>
+          <textarea
+            id="chat-input"
+            name="question"
+            rows="2"
+            maxlength="500"
+            placeholder="例如：文具書籍的 200 點是什麼？"
+            disabled
+          ></textarea>
+          <button id="send-message" class="primary-button send-button" type="submit" disabled>
+            傳送
+          </button>
+        </form>
+
+        <p class="footnote">
+          AI 不是候選人本人。回答依競選影片整理；影片未提到的細節，請向候選人或學校確認。
+          對話不會送到推論伺服器；首次下載模型需要網路。
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

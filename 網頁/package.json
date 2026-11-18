@@ -1,0 +1,16 @@
+{
+  "name": "chen-weilun-webllm-chat",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@mlc-ai/web-llm": "0.2.89"
+  },
+  "devDependencies": {
+    "vite": "8.3.8"
+  }
+}
