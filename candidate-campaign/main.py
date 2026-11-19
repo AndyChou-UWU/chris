@@ -348,6 +348,7 @@ def main(page: ft.Page) -> None:
     content = ft.Column(
         spacing=0,
         scroll=ft.ScrollMode.AUTO,
+        expand=True,
         controls=[
             ft.Container(
                 padding=ft.Padding.symmetric(horizontal=16, vertical=16),
