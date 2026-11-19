@@ -70,7 +70,7 @@ def promise_card(
 
 
 def main(page: ft.Page) -> None:
-    page.title = "陳威倫｜1號學生代表候選人"
+    page.title = "Chen Weilun | Student Representative Candidate No. 1"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = COLORS["cream"]
     page.padding = 0
@@ -83,21 +83,21 @@ def main(page: ft.Page) -> None:
                 border_radius=30,
                 bgcolor=COLORS["sun"],
                 content=ft.Text(
-                    "學生代表選舉  ·  1 號候選人",
+                    "STUDENT REPRESENTATIVE ELECTION  ·  CANDIDATE NO. 1",
                     size=14,
                     weight=ft.FontWeight.W_700,
                     color=COLORS["ink"],
                 ),
             ),
             ft.Text(
-                "讓校園生活\n更健康、更有趣！",
+                "A healthier,\nmore engaging school life!",
                 size=42,
                 weight=ft.FontWeight.W_700,
                 color=COLORS["ink"],
             ),
             ft.Text(
-                "我是陳威倫。希望從每天的飲食、學習與活動開始，"
-                "讓校園生活多一點健康、多一點選擇，也多一點期待。",
+                "I'm Chen Weilun. I want to make everyday school life "
+                "healthier, more engaging, and full of opportunities.",
                 size=17,
                 color=COLORS["muted"],
             ),
@@ -106,7 +106,7 @@ def main(page: ft.Page) -> None:
                 spacing=12,
                 controls=[
                     ft.Button(
-                        content="看競選影片",
+                        content="Watch the campaign video",
                         icon=ft.Icons.PLAY_ARROW,
                         bgcolor=COLORS["ink"],
                         color=COLORS["white"],
@@ -121,7 +121,7 @@ def main(page: ft.Page) -> None:
                                 size=20,
                             ),
                             ft.Text(
-                                "我們班支持陳威倫",
+                                "Our class supports Chen Weilun",
                                 size=15,
                                 weight=ft.FontWeight.W_600,
                                 color=COLORS["ink"],
@@ -144,7 +144,7 @@ def main(page: ft.Page) -> None:
                     width=560,
                     height=390,
                     fit=ft.BoxFit.COVER,
-                    semantics_label="陳威倫 1 號候選人",
+                    semantics_label="Chen Weilun, candidate number one",
                 ),
                 ft.Container(
                     left=18,
@@ -153,7 +153,7 @@ def main(page: ft.Page) -> None:
                     border_radius=18,
                     bgcolor=COLORS["sun"],
                     content=ft.Text(
-                        "1 號",
+                        "NO. 1",
                         size=24,
                         weight=ft.FontWeight.W_700,
                         color=COLORS["ink"],
@@ -170,22 +170,22 @@ def main(page: ft.Page) -> None:
             promise_card(
                 "IDEA 01",
                 ft.Icons.RESTAURANT,
-                "健康水果點心",
-                "準備健康又好吃的水果點心，讓補充活力成為校園日常。",
+                "Healthy Fruit Snacks",
+                "Offer healthy, delicious fruit snacks to help students stay energized throughout the school day.",
                 "#FFE88A",
             ),
             promise_card(
                 "IDEA 02",
                 ft.Icons.REDEEM,
-                "文具書籍送 200 點",
-                "購買文具或書籍，就有機會獲得 200 點購物點數，讓學習所需更有支持。",
+                "200 Points for School Supplies and Books",
+                "Earn 200 shopping points when buying school supplies or books.",
                 "#F8B7A7",
             ),
             promise_card(
                 "IDEA 03",
                 ft.Icons.PARK,
-                "走出教室上課",
-                "增加戶外課程，用不同方式探索與學習，讓上課多一點新鮮感。",
+                "Outdoor Classes",
+                "Add outdoor classes so students can explore and learn in new ways.",
                 "#BDE1C7",
             ),
         ],
@@ -212,13 +212,13 @@ def main(page: ft.Page) -> None:
                                 spacing=4,
                                 controls=[
                                     ft.Text(
-                                        "用瀏覽器和政見小幫手聊聊",
+                                        "Chat with the Campaign Assistant",
                                         size=25,
                                         weight=ft.FontWeight.W_700,
                                         color=COLORS["ink"],
                                     ),
                                     ft.Text(
-                                        "Qwen2.5 1.5B · WebGPU 瀏覽器端推論",
+                                        "Qwen2.5 1.5B · Runs locally in your browser with WebGPU",
                                         size=14,
                                         color=COLORS["muted"],
                                     ),
@@ -227,13 +227,13 @@ def main(page: ft.Page) -> None:
                         ],
                     ),
                     ft.Text(
-                        "第一次使用需下載約 1–2 GB 模型；之後可使用瀏覽器快取。"
-                        "對話在你的瀏覽器本機運算，不會送到推論伺服器。",
+                        "The first visit downloads a 1–2 GB model. Later visits can reuse the browser cache. "
+                        "Conversations run locally in your browser and are not sent to an inference server.",
                         size=15,
                         color=COLORS["muted"],
                     ),
                     ft.Button(
-                        content="開啟瀏覽器 AI 聊天",
+                        content="Open the AI chat",
                         icon=ft.Icons.ARROW_FORWARD,
                         bgcolor=COLORS["ink"],
                         color=COLORS["white"],
@@ -270,7 +270,7 @@ def main(page: ft.Page) -> None:
                                     ),
                                 ),
                                 ft.Text(
-                                    "陳威倫・學生代表候選人",
+                                    "Chen Weilun · Student Representative Candidate",
                                     size=16,
                                     weight=ft.FontWeight.W_700,
                                     color=COLORS["ink"],
@@ -278,7 +278,7 @@ def main(page: ft.Page) -> None:
                             ],
                         ),
                         ft.Text(
-                            "健康  ·  有趣  ·  多元",
+                            "HEALTHY  ·  ENGAGING  ·  INCLUSIVE",
                             size=14,
                             color=COLORS["muted"],
                         ),
@@ -307,13 +307,13 @@ def main(page: ft.Page) -> None:
                             spacing=8,
                             controls=[
                                 ft.Text(
-                                    "把想法，變成更好的校園日常",
+                                    "Ideas for a better school day",
                                     size=30,
                                     weight=ft.FontWeight.W_700,
                                     color=COLORS["ink"],
                                 ),
                                 ft.Text(
-                                    "三個簡單方向，從同學每天最有感的事開始。",
+                                    "Three practical ideas focused on students' everyday lives.",
                                     size=16,
                                     color=COLORS["muted"],
                                 ),
@@ -339,20 +339,20 @@ def main(page: ft.Page) -> None:
                                 spacing=8,
                                 controls=[
                                     ft.Text(
-                                        "選 1 號，讓改變從日常開始。",
+                                        "Vote for No. 1. Start with everyday change.",
                                         size=27,
                                         weight=ft.FontWeight.W_700,
                                         color=COLORS["white"],
                                     ),
                                     ft.Text(
-                                        "陳威倫  #1",
+                                        "Chen Weilun  #1",
                                         size=16,
                                         color="#D9E7DD",
                                     ),
                                 ],
                             ),
                             ft.Button(
-                                content="播放完整競選影片",
+                                content="Watch the full campaign video",
                                 icon=ft.Icons.PLAY_CIRCLE_OUTLINE,
                                 bgcolor=COLORS["sun"],
                                 color=COLORS["ink"],
@@ -366,7 +366,7 @@ def main(page: ft.Page) -> None:
                 padding=ft.Padding.only(left=28, right=28, bottom=22),
                 alignment=ft.Alignment.CENTER,
                 content=ft.Text(
-                    "政見整理自候選人競選影片；實際執行方式依學校規範辦理。",
+                    "Campaign promises are summarized from the candidate's video. Implementation is subject to school policies.",
                     size=12,
                     color=COLORS["muted"],
                     text_align=ft.TextAlign.CENTER,
