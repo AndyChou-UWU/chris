@@ -41,6 +41,13 @@ button:disabled {
   padding: 28px 0 56px;
 }
 
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 .back-link {
   color: #1e5558;
   font-weight: 700;
@@ -49,6 +56,28 @@ button:disabled {
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+.language-switch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.language-button {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d5ded9;
+  border-radius: 12px;
+  background: #fff;
+  color: #173e43;
+  font-weight: 700;
+}
+
+.language-button[aria-pressed="true"] {
+  border-color: #173e43;
+  background: #173e43;
+  color: #fff;
 }
 
 .page-header {
@@ -280,6 +309,27 @@ textarea:focus {
   .app-shell {
     width: min(100% - 24px, 860px);
     padding-top: 20px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .language-switch {
+    margin-left: auto;
+  }
+
+  .page-header {
+    padding-top: 28px;
+  }
+
+  .chat-heading {
+    flex-direction: column;
+  }
+
+  .text-button {
+    align-self: flex-end;
   }
 
   .chat-form {

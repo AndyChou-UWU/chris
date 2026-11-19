@@ -11,37 +11,43 @@
   </head>
   <body>
     <main class="app-shell">
-      <a class="back-link" href="/">← Back to the candidate page</a>
+      <div class="topbar">
+        <a class="back-link" href="/">← Back to the candidate page</a>
+        <div class="language-switch" role="group" aria-label="Select language" data-i18n-aria="languageSelector">
+          <button class="language-button" type="button" data-language="zh" aria-pressed="false">中文</button>
+          <button class="language-button" type="button" data-language="en" aria-pressed="true">English</button>
+        </div>
+      </div>
 
       <header class="page-header">
-        <p class="eyebrow">CHEN WEILUN · CANDIDATE NO. 1</p>
-        <h1>Campaign Assistant</h1>
-        <p class="subtitle">Curious about Chen's platform? Ask away.</p>
+        <p class="eyebrow" data-i18n="eyebrow">CHEN WEILUN · CANDIDATE NO. 1</p>
+        <h1 data-i18n="pageTitle">Campaign Assistant</h1>
+        <p class="subtitle" data-i18n="subtitle">Curious about Chen's platform? Ask away.</p>
       </header>
 
       <section class="model-card" aria-labelledby="model-title">
         <div>
-          <p class="section-kicker">AI IN YOUR BROWSER</p>
+          <p class="section-kicker" data-i18n="modelKicker">AI IN YOUR BROWSER</p>
           <h2 id="model-title">Qwen2.5 1.5B</h2>
-          <p class="model-description">
-            Runs locally in your browser with WebGPU. The first model download is about 1–2 GB;
-            your browser can cache it for future visits.
+          <p class="model-description" data-i18n="modelDescription">
+            Runs locally in your browser with WebGPU. The first model download is about 1–2 GB.
+            Your browser can cache it for future visits. Loading starts automatically when WebGPU is available.
           </p>
         </div>
-        <button id="load-model" class="primary-button" type="button" disabled>
-          Load the AI model
+        <button id="load-model" class="primary-button" type="button" data-i18n="checkingWebGPU" disabled>
+          Checking WebGPU support...
         </button>
         <div id="progress-panel" class="progress-panel" hidden>
           <div class="progress-heading">
-            <span id="status" role="status" aria-live="polite">Ready to load the model...</span>
+            <span id="status" role="status" aria-live="polite" data-i18n="readyToLoad">Ready to load the model...</span>
             <span id="progress-percent">0%</span>
           </div>
-          <progress id="download-progress" max="100" value="0">
+          <progress id="download-progress" max="100" value="0" data-i18n-aria="downloadProgress">
             0%
           </progress>
           <p id="progress-detail" class="progress-detail"></p>
         </div>
-        <p id="compatibility" class="compatibility" role="status" aria-live="polite">
+        <p id="compatibility" class="compatibility" role="status" aria-live="polite" data-i18n="checkingBrowser">
           Checking your browser's WebGPU support...
         </p>
       </section>
@@ -49,10 +55,10 @@
       <section class="chat-card" aria-labelledby="chat-title">
         <div class="chat-heading">
           <div>
-            <p class="section-kicker">YOUR CONVERSATION STAYS ON THIS DEVICE</p>
-            <h2 id="chat-title">Chat with the campaign assistant</h2>
+            <p class="section-kicker" data-i18n="chatKicker">YOUR CONVERSATION STAYS ON THIS DEVICE</p>
+            <h2 id="chat-title" data-i18n="chatTitle">Chat with the campaign assistant</h2>
           </div>
-          <button id="clear-chat" class="text-button" type="button">
+          <button id="clear-chat" class="text-button" type="button" data-i18n="clearChat">
             Clear chat
           </button>
         </div>
@@ -60,7 +66,7 @@
         <div id="messages" class="messages" aria-live="polite"></div>
 
         <form id="chat-form" class="chat-form">
-          <label class="sr-only" for="chat-input">Type your question</label>
+          <label class="sr-only" for="chat-input" data-i18n="questionLabel">Type your question</label>
           <textarea
             id="chat-input"
             name="question"
@@ -69,12 +75,12 @@
             placeholder="For example: How do the 200 points work?"
             disabled
           ></textarea>
-          <button id="send-message" class="primary-button send-button" type="submit" disabled>
+          <button id="send-message" class="primary-button send-button" type="submit" data-i18n="send" disabled>
             Send
           </button>
         </form>
 
-        <p class="footnote">
+        <p class="footnote" data-i18n="footnote">
           This AI is not the candidate. Answers are based on the campaign video; please ask the candidate or school about details not covered there.
           Your conversation is not sent to an inference server. An internet connection is needed for the initial model download.
         </p>

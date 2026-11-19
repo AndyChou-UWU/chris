@@ -9,8 +9,9 @@ app_port: 7860
 
 # Chen Weilun No. 1 | Student Representative Candidate
 
-A campaign introduction site built with Flet, featuring a browser-based AI assistant powered by `@mlc-ai/web-llm`.
+A bilingual, mobile-friendly campaign introduction site built with Flet, featuring a browser-based AI assistant powered by `@mlc-ai/web-llm`.
 The chat interface uses HTML, CSS, JavaScript, and Vite. Model inference runs locally in the visitor's browser with WebGPU.
+The homepage and assistant offer English and Traditional Chinese.
 
 The campaign video presents three promises:
 
@@ -55,7 +56,7 @@ The multi-stage Dockerfile builds the WebLLM frontend before creating the Python
 
 ## WebLLM model and privacy
 
-The default model is `Qwen2.5-1.5B-Instruct-q4f16_1-MLC`. The first visit downloads approximately 1–2 GB of model files and displays loading progress. WebLLM can cache the model in the browser for later visits. Chat inference runs locally with WebGPU and is not sent to Ollama or another inference API.
+The default model is `Qwen2.5-1.5B-Instruct-q4f16_1-MLC`. The chat page automatically checks for WebGPU and starts downloading approximately 1–2 GB of model files when supported, with visible loading progress. WebLLM can cache the model in the browser for later visits. Chat inference runs locally with WebGPU and is not sent to Ollama or another inference API.
 
 Conversation history is kept in page memory and is cleared when the page is reloaded. The initial model download requires an internet connection. Visitors whose browsers do not support WebGPU see a compatibility notice.
 
@@ -64,9 +65,10 @@ Conversation history is kept in page memory and is cleared when the page is relo
 ```text
 candidate-campaign/
 ├── main.py                 # Flet campaign introduction
+├── main_picture.png        # Main campaign photo
 ├── assets/
 │   ├── campaign.mp4        # Campaign video
-│   ├── candidate.jpg       # Candidate photo
+│   ├── main_picture.png    # Main photo served by Flet
 │   └── webllm/             # Vite build output served by Flet
 ├── webllm/
 │   ├── index.html
