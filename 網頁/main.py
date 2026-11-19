@@ -1,3 +1,5 @@
+import os
+
 import flet as ft
 
 
@@ -379,6 +381,8 @@ def main(page: ft.Page) -> None:
 if __name__ == "__main__":
     ft.run(
         main,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "7860")),
         view=ft.AppView.WEB_BROWSER,
         assets_dir="assets",
     )

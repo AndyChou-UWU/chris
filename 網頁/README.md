@@ -1,3 +1,12 @@
+---
+title: 陳威倫 1 號競選介紹頁
+emoji: 🎓
+colorFrom: green
+colorTo: yellow
+sdk: docker
+app_port: 7860
+---
+
 # 陳威倫 1 號｜學生代表候選人
 
 以 Flet 製作的繁體中文競選介紹頁，並整合使用 `@mlc-ai/web-llm` 的瀏覽器端 AI 政見小幫手。
@@ -34,6 +43,16 @@ py -m venv .venv # 僅在尚未建立 .venv 時執行
 ```
 
 網站首頁的「開啟瀏覽器 AI 聊天」按鈕會連至 `assets/webllm` 建置出的頁面。也可以在開發時執行 `& npm.cmd run dev`，直接預覽 WebLLM 聊天介面。
+
+## 部署到 Render
+
+將此專案推送到 GitHub 後，在 Render 建立 **Web Service** 並連接該 repository：
+
+1. **Root Directory** 設為 `網頁`（此專案位於 repository 的 `網頁` 子目錄）。
+2. **Runtime** 選擇 **Docker**，Dockerfile 路徑使用 `Dockerfile`。
+3. 建立服務。應用程式會監聽 Render 自動提供的 `PORT`，並綁定 `0.0.0.0`；若要設定 Health Check Path，使用 `/`。
+
+根目錄的 Dockerfile 會先建置 WebLLM 前端，再建立 Python/Flet 執行映像。保留 `7860` 作為未提供 `PORT` 時的預設值，也可用於 Hugging Face Spaces。Render 免費服務可能休眠；WebGPU 模型則由每位訪客的瀏覽器自行下載並執行。
 
 ## WebLLM 模型與資料
 
