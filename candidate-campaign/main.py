@@ -119,17 +119,17 @@ def create_carousel(page: ft.Page) -> ft.Container:
                             controls=[
                                 ft.Text(
                                     title,
-                                    size=42,
-                                    weight=ft.FontWeight.BOLD,
-                                    color="white",
+                                    size=38,
+                                    weight=ft.FontWeight.W_900,
+                                    color="#FFEBB5",
                                     text_align=ft.TextAlign.CENTER,
                                 ),
                                 ft.Text(
                                     subtitle,
-                                    size=20,
-                                    color="#FFEBB5",
+                                    size=18,
+                                    color="white",
                                     text_align=ft.TextAlign.CENTER,
-                                    weight=ft.FontWeight.W_600,
+                                    weight=ft.FontWeight.W_500,
                                 ),
                             ],
                         ),
