@@ -1,4 +1,6 @@
 import os
+import time
+import threading
 
 import flet as ft
 
@@ -49,6 +51,136 @@ def promise_card(
     )
 
 
+def create_carousel(page: ft.Page) -> ft.Container:
+    """豐富主畫面輪播圖，參考影片政見：健康、活力、戶外學習"""
+    slides_data = [
+        (
+            "candidate.jpg",
+            "陳威倫 — 1號候選人",
+            "活力、健康、民主校園從我開始！",
+            None,
+        ),
+        (
+            "campaign.mp4",
+            "競選影片精華",
+            "健康水果點心 · 200點購物點數 · 更多戶外課程",
+            True,  # is_video
+        ),
+        (
+            "main_picture.png",
+            "讓每一天校園生活更精彩",
+            "健康、趣味、多元學習機會",
+            None,
+        ),
+    ]
+
+    carousel = ft.Container(
+        height=420,
+        border_radius=28,
+        clip_behavior=ft.ClipBehavior.HARD_EDGE,
+        content=ft.Stack(expand=True, controls=[]),
+    )
+
+    indicators = ft.Row(
+        alignment=ft.MainAxisAlignment.CENTER,
+        spacing=10,
+        controls=[],
+    )
+
+    current_index = [0]  # mutable for closure
+
+    def show_slide(idx: int):
+        current_index[0] = idx % len(slides_data)
+        for i, slide_container in enumerate(carousel.content.controls[:-1]):  # exclude indicators
+            slide_container.visible = (i == current_index[0])
+        for i, dot in enumerate(indicators.controls):
+            dot.bgcolor = COLORS["sun"] if i == current_index[0] else COLORS["muted"]
+        carousel.update()
+
+    slide_containers = []
+    for i, (src, title, subtitle, is_video) in enumerate(slides_data):
+        media = ft.Image(
+            src=src,
+            fit=ft.BoxFit.COVER,
+            expand=True,
+        )
+
+        slide = ft.Container(
+            content=ft.Stack(
+                controls=[
+                    media,
+                    ft.Container(
+                        padding=40,
+                        bgcolor="#00000088",
+                        content=ft.Column(
+                            spacing=12,
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                            controls=[
+                                ft.Text(
+                                    title,
+                                    size=36,
+                                    weight=ft.FontWeight.BOLD,
+                                    color="white",
+                                    text_align=ft.TextAlign.CENTER,
+                                ),
+                                ft.Text(
+                                    subtitle,
+                                    size=18,
+                                    color="#FFEBB5",
+                                    text_align=ft.TextAlign.CENTER,
+                                    weight=ft.FontWeight.W_500,
+                                ),
+                            ],
+                        ),
+                        alignment=ft.Alignment(0, 0.75),
+                    ),
+                ]
+            ),
+            visible=(i == 0),
+            expand=True,
+        )
+        slide_containers.append(slide)
+
+    # Add slides
+    carousel.content.controls.extend(slide_containers)
+
+    # Add indicators
+    for i in range(len(slides_data)):
+        dot = ft.Container(
+            width=14,
+            height=14,
+            border_radius=7,
+            bgcolor=COLORS["sun"] if i == 0 else COLORS["muted"],
+            on_click=lambda e, idx=i: show_slide(idx),
+        )
+        indicators.controls.append(dot)
+
+    carousel.content.controls.append(
+        ft.Container(
+            content=indicators,
+            bottom=20,
+            left=0,
+            right=0,
+            alignment=ft.Alignment(0, 0),
+        )
+    )
+
+    # Auto carousel
+    def auto_advance():
+        while True:
+            time.sleep(4.5)
+            if not page or not page.controls:
+                break
+            next_idx = (current_index[0] + 1) % len(slides_data)
+            show_slide(next_idx)
+            if page:
+                page.update()
+
+    threading.Thread(target=auto_advance, daemon=True).start()
+
+    return carousel
+
+
 def main(page: ft.Page) -> None:
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = COLORS["cream"]
@@ -94,66 +226,67 @@ def main(page: ft.Page) -> None:
     language_zh.on_click = lambda _: set_language("zh")
 
     hero_copy = ft.Column(
-        spacing=18,
+        spacing=20,
         controls=[
             ft.Container(
-                padding=ft.Padding.symmetric(horizontal=14, vertical=8),
+                padding=ft.Padding.symmetric(horizontal=16, vertical=10),
                 border_radius=30,
                 bgcolor=COLORS["sun"],
                 content=text(
                     "STUDENT REPRESENTATIVE ELECTION  ·  CANDIDATE NO. 1",
                     "學生代表選舉  ·  1 號候選人",
-                    size=14,
+                    size=15,
                     weight=ft.FontWeight.W_700,
                     color=COLORS["ink"],
                 ),
             ),
             text(
-                "A healthier,\nmore engaging school life!",
-                "讓校園生活更健康，\n也更精彩！",
-                size=42,
+                "讓校園更健康、更有趣、更有未來！",
+                "讓校園更健康、更有趣、更有未來！",
+                size=46,
                 weight=ft.FontWeight.W_700,
                 color=COLORS["ink"],
             ),
             text(
-                "I'm Chen Weilun. I want to make everyday school life "
-                "healthier, more engaging, and full of opportunities.",
-                "我是陳威倫，希望讓每天的校園生活更健康、更有趣，並帶來更多學習機會。",
-                size=17,
+                "我是陳威倫（1號）。\n"
+                "透過健康水果點心、200點購物激勵與戶外課程，\n"
+                "讓每位同學每天都充滿活力與學習動力。",
+                "我是陳威倫（1號）。\n"
+                "透過健康水果點心、200點購物激勵與戶外課程，\n"
+                "讓每位同學每天都充滿活力與學習動力。",
+                size=18,
                 color=COLORS["muted"],
+                text_align=ft.TextAlign.CENTER,
             ),
             ft.Row(
                 wrap=True,
-                spacing=12,
+                spacing=16,
                 controls=[
                     localized(
                         ft.Button(
-                            content="Watch the campaign video",
-                            icon=ft.Icons.PLAY_ARROW,
+                            content="立即觀看競選影片",
+                            icon=ft.Icons.PLAY_CIRCLE,
                             bgcolor=COLORS["ink"],
                             color=COLORS["white"],
-                            url="/campaign.mp4",
+                            url="campaign.mp4",
+                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=30)),
                         ),
                         "Watch the campaign video",
-                        "觀看競選影片",
+                        "立即觀看競選影片",
                         "content",
                     ),
-                    ft.Row(
-                        spacing=8,
-                        controls=[
-                            ft.Icon(
-                                ft.Icons.VOLUNTEER_ACTIVISM,
-                                color=COLORS["coral"],
-                                size=20,
-                            ),
-                            text(
-                                "Our class supports Chen Weilun",
-                                "我們班支持陳威倫",
-                                size=15,
-                                weight=ft.FontWeight.W_600,
-                                color=COLORS["ink"],
-                            ),
-                        ],
+                    localized(
+                        ft.Button(
+                            content="與 AI 政見小幫手聊天",
+                            icon=ft.Icons.CHAT_BUBBLE,
+                            bgcolor=COLORS["teal"],
+                            color=COLORS["white"],
+                            url="/webllm/index.html",
+                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=30)),
+                        ),
+                        "Chat with AI Assistant",
+                        "與 AI 政見小幫手聊天",
+                        "content",
                     ),
                 ],
             ),
@@ -345,6 +478,115 @@ def main(page: ft.Page) -> None:
     )
     chat_button = webllm_section.content.content.controls[-1]
 
+    # 新增豐富引導區 - 為什麼選擇1號（呼應影片精神）
+    why_choose_section = ft.Container(
+        padding=ft.Padding.symmetric(horizontal=16, vertical=48),
+        bgcolor="#F4EEDC",
+        content=ft.Column(
+            spacing=32,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            controls=[
+                ft.Column(
+                    spacing=8,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    controls=[
+                        text(
+                            "為什麼選擇 1 號？",
+                            "為什麼選擇 1 號？",
+                            size=36,
+                            weight=ft.FontWeight.W_700,
+                            color=COLORS["ink"],
+                        ),
+                        text(
+                            "參考競選影片 — 讓校園生活更健康、更有趣、更有機會",
+                            "參考競選影片 — 讓校園生活更健康、更有趣、更有機會",
+                            size=17,
+                            color=COLORS["muted"],
+                        ),
+                    ],
+                ),
+                ft.ResponsiveRow(
+                    spacing=20,
+                    run_spacing=20,
+                    controls=[
+                        ft.Container(
+                            col={"xs": 12, "sm": 4},
+                            content=ft.Column(
+                                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                spacing=16,
+                                controls=[
+                                    ft.Icon(ft.Icons.APPLE, size=64, color=COLORS["coral"]),
+                                    text(
+                                        "健康活力",
+                                        "健康活力",
+                                        size=22,
+                                        weight=ft.FontWeight.BOLD,
+                                        color=COLORS["ink"],
+                                    ),
+                                    text(
+                                        "每日提供新鮮水果點心\n讓同學上課更有精神",
+                                        "每日提供新鮮水果點心\n讓同學上課更有精神",
+                                        size=15,
+                                        color=COLORS["muted"],
+                                        text_align=ft.TextAlign.CENTER,
+                                    ),
+                                ],
+                            ),
+                        ),
+                        ft.Container(
+                            col={"xs": 12, "sm": 4},
+                            content=ft.Column(
+                                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                spacing=16,
+                                controls=[
+                                    ft.Icon(ft.Icons.REDEEM, size=64, color=COLORS["sun"]),
+                                    text(
+                                        "學習激勵",
+                                        "學習激勵",
+                                        size=22,
+                                        weight=ft.FontWeight.BOLD,
+                                        color=COLORS["ink"],
+                                    ),
+                                    text(
+                                        "購買文具或書籍\n立即獲得200點購物點數",
+                                        "購買文具或書籍\n立即獲得200點購物點數",
+                                        size=15,
+                                        color=COLORS["muted"],
+                                        text_align=ft.TextAlign.CENTER,
+                                    ),
+                                ],
+                            ),
+                        ),
+                        ft.Container(
+                            col={"xs": 12, "sm": 4},
+                            content=ft.Column(
+                                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                spacing=16,
+                                controls=[
+                                    ft.Icon(ft.Icons.PARK, size=64, color=COLORS["teal"]),
+                                    text(
+                                        "多元探索",
+                                        "多元探索",
+                                        size=22,
+                                        weight=ft.FontWeight.BOLD,
+                                        color=COLORS["ink"],
+                                    ),
+                                    text(
+                                        "增加戶外課程\n走出教室、親近自然、快樂學習",
+                                        "增加戶外課程\n走出教室、親近自然、快樂學習",
+                                        size=15,
+                                        color=COLORS["muted"],
+                                        text_align=ft.TextAlign.CENTER,
+                                    ),
+                                ],
+                            ),
+                        ),
+                    ],
+                ),
+            ],
+        ),
+    )
+
     content = ft.Column(
         spacing=0,
         scroll=ft.ScrollMode.AUTO,
@@ -410,6 +652,8 @@ def main(page: ft.Page) -> None:
                     ],
                 ),
             ),
+            create_carousel(page),  # 新增豐富輪播圖
+            why_choose_section,     # 新增引導區
             webllm_section,
             ft.Container(
                 padding=ft.Padding.symmetric(horizontal=16, vertical=32),
@@ -486,7 +730,7 @@ def main(page: ft.Page) -> None:
                                     icon=ft.Icons.PLAY_CIRCLE_OUTLINE,
                                     bgcolor=COLORS["sun"],
                                     color=COLORS["ink"],
-                                    url="/campaign.mp4",
+                                    url="campaign.mp4",
                                 ),
                                 "Watch the full campaign video",
                                 "觀看完整競選影片",
@@ -520,8 +764,8 @@ def main(page: ft.Page) -> None:
 if __name__ == "__main__":
     ft.run(
         main,
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", "7860")),
+        host="127.0.0.1",
+        port=8080,
         view=ft.AppView.WEB_BROWSER,
         assets_dir="assets",
     )
