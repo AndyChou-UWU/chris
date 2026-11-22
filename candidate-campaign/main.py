@@ -123,7 +123,6 @@ def create_carousel(page: ft.Page) -> ft.Container:
                                     weight=ft.FontWeight.BOLD,
                                     color="white",
                                     text_align=ft.TextAlign.CENTER,
-                                    shadow=ft.BoxShadow(blur_radius=10, color="#00000088"),
                                 ),
                                 ft.Text(
                                     subtitle,
@@ -131,7 +130,6 @@ def create_carousel(page: ft.Page) -> ft.Container:
                                     color="#FFEBB5",
                                     text_align=ft.TextAlign.CENTER,
                                     weight=ft.FontWeight.W_600,
-                                    shadow=ft.BoxShadow(blur_radius=8, color="#00000088"),
                                 ),
                             ],
                         ),
@@ -595,6 +593,25 @@ def main(page: ft.Page) -> None:
         scroll=ft.ScrollMode.AUTO,
         expand=True,
         controls=[
+            # 導覽區 - 讓第一次進來的人清楚知道如何操作
+            ft.Container(
+                padding=ft.Padding.symmetric(horizontal=16, vertical=20),
+                bgcolor=COLORS["sun"],
+                content=ft.Row(
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    controls=[
+                        ft.Icon(ft.Icons.NAVIGATE_NEXT, color=COLORS["ink"], size=28),
+                        text(
+                            "↓ 向下捲動探索完整競選內容 ↓",
+                            "↓ 向下捲動探索完整競選內容 ↓",
+                            size=18,
+                            weight=ft.FontWeight.BOLD,
+                            color=COLORS["ink"],
+                        ),
+                        ft.Icon(ft.Icons.NAVIGATE_NEXT, color=COLORS["ink"], size=28),
+                    ],
+                ),
+            ),
             ft.Container(
                 padding=ft.Padding.symmetric(horizontal=16, vertical=16),
                 content=ft.ResponsiveRow(
@@ -744,14 +761,31 @@ def main(page: ft.Page) -> None:
                 ),
             ),
             ft.Container(
-                padding=ft.Padding.only(left=16, right=16, bottom=22),
+                padding=ft.Padding.only(left=16, right=16, bottom=40),
                 alignment=ft.Alignment.CENTER,
-                content=text(
-                    "Campaign promises are summarized from the candidate's video. Implementation is subject to school policies.",
-                    "競選政見依候選人影片整理；實際執行仍須遵守學校規定。",
-                    size=12,
-                    color=COLORS["muted"],
-                    text_align=ft.TextAlign.CENTER,
+                content=ft.Column(
+                    spacing=8,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    controls=[
+                        text(
+                            "製作人：周楷恩",
+                            "製作人：周楷恩",
+                            size=14,
+                            weight=ft.FontWeight.BOLD,
+                            color=COLORS["ink"],
+                        ),
+                        text(
+                            "有建議或問題可傳訊給 110054@zhps.tp.edu.tw",
+                            "有建議或問題可傳訊給 110054@zhps.tp.edu.tw",
+                            size=13,
+                            color=COLORS["muted"],
+                        ),
+                        ft.Text(
+                            "© 2026 陳威倫學生代表競選團隊",
+                            size=12,
+                            color=COLORS["muted"],
+                        ),
+                    ],
                 ),
             ),
         ],
@@ -762,6 +796,20 @@ def main(page: ft.Page) -> None:
     update_responsive_image()
     page.on_resize = on_resize
     page.add(content)
+
+    # 新增回到頂部按鈕
+    def scroll_to_top(e):
+        page.scroll_to(offset=0, duration=800)
+        page.update()
+
+    back_to_top = ft.FloatingActionButton(
+        icon=ft.Icons.ARROW_UPWARD,
+        bgcolor=COLORS["sun"],
+        on_click=scroll_to_top,
+        tooltip="回到頂部",
+    )
+    page.floating_action_button = back_to_top
+    page.update()
 
 
 if __name__ == "__main__":
