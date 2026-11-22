@@ -75,7 +75,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
     ]
 
     carousel = ft.Container(
-        height=520,
+        height=560,
         border_radius=28,
         clip_behavior=ft.ClipBehavior.HARD_EDGE,
         content=ft.Stack(expand=True, controls=[]),
@@ -111,7 +111,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
                     media,
                     ft.Container(
                         padding=40,
-                        bgcolor="#000000AA",
+                        bgcolor="#000000CC",
                         border_radius=28,
                         content=ft.Column(
                             spacing=12,
@@ -119,21 +119,21 @@ def create_carousel(page: ft.Page) -> ft.Container:
                             controls=[
                                 ft.Text(
                                     title,
-                                    size=38,
+                                    size=44,
                                     weight=ft.FontWeight.W_900,
                                     color="#FFEBB5",
                                     text_align=ft.TextAlign.CENTER,
                                 ),
                                 ft.Text(
                                     subtitle,
-                                    size=18,
+                                    size=19,
                                     color="white",
                                     text_align=ft.TextAlign.CENTER,
                                     weight=ft.FontWeight.W_500,
                                 ),
                             ],
                         ),
-                        alignment=ft.Alignment(0, 0.75),
+                        alignment=ft.Alignment(0, 0.8),
                     ),
                 ]
             ),
