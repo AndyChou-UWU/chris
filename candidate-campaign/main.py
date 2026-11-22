@@ -61,13 +61,13 @@ def create_carousel(page: ft.Page) -> ft.Container:
             None,
         ),
         (
-            "campaign.mp4",
+            "main_picture.png",
             "競選影片精華",
             "健康水果點心 · 200點購物點數 · 更多戶外課程",
-            True,  # is_video
+            None,
         ),
         (
-            "main_picture.png",
+            "candidate.jpg",
             "讓每一天校園生活更精彩",
             "健康、趣味、多元學習機會",
             None,
@@ -75,7 +75,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
     ]
 
     carousel = ft.Container(
-        height=420,
+        height=520,
         border_radius=28,
         clip_behavior=ft.ClipBehavior.HARD_EDGE,
         content=ft.Stack(expand=True, controls=[]),
@@ -111,24 +111,27 @@ def create_carousel(page: ft.Page) -> ft.Container:
                     media,
                     ft.Container(
                         padding=40,
-                        bgcolor="#00000088",
+                                    bgcolor="#000000AA",
+                        border_radius=28,
                         content=ft.Column(
                             spacing=12,
                             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                             controls=[
                                 ft.Text(
                                     title,
-                                    size=36,
+                                    size=42,
                                     weight=ft.FontWeight.BOLD,
                                     color="white",
                                     text_align=ft.TextAlign.CENTER,
+                                    shadow=ft.BoxShadow(blur_radius=10, color="#00000088"),
                                 ),
                                 ft.Text(
                                     subtitle,
-                                    size=18,
+                                    size=20,
                                     color="#FFEBB5",
                                     text_align=ft.TextAlign.CENTER,
-                                    weight=ft.FontWeight.W_500,
+                                    weight=ft.FontWeight.W_600,
+                                    shadow=ft.BoxShadow(blur_radius=8, color="#00000088"),
                                 ),
                             ],
                         ),
