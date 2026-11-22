@@ -42,6 +42,8 @@ py -m venv .venv
 .\.venv\Scripts\python.exe main.py
 ```
 
+For local browsing, use `http://127.0.0.1:8080`. `0.0.0.0` is a server bind address, not a browser URL.
+
 The home page links to the built chat page in `assets/webllm`. For frontend development, run `& npm.cmd run dev`.
 
 ## Deploy to Render
@@ -58,7 +60,7 @@ The multi-stage Dockerfile builds the WebLLM frontend before creating the Python
 
 The default model is `Qwen2.5-1.5B-Instruct-q4f16_1-MLC`. The chat page automatically checks for WebGPU and starts downloading approximately 1–2 GB of model files when supported, with visible loading progress. WebLLM can cache the model in the browser for later visits. Chat inference runs locally with WebGPU and is not sent to Ollama or another inference API.
 
-Conversation history is kept in page memory and is cleared when the page is reloaded. The initial model download requires an internet connection. Visitors whose browsers do not support WebGPU see a compatibility notice.
+The ten most recent user and assistant messages are saved in the browser's local storage and restored when the chat page is reopened on the same browser and site address. Use **Clear chat** to delete the saved conversation. The history stays on the device and is not sent to an inference server; clearing browser site data also deletes it. The initial model download requires an internet connection. Visitors whose browsers do not support WebGPU see a compatibility notice.
 
 ## Project structure
 

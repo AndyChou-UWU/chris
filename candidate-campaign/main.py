@@ -15,6 +15,12 @@ COLORS = {
     "white": "#FFFFFF",
 }
 
+CARD_SHADOW = ft.BoxShadow(
+    blur_radius=22,
+    color="#173E4318",
+    offset=ft.Offset(0, 6),
+)
+
 
 def promise_card(
     number: ft.Text,
@@ -26,8 +32,10 @@ def promise_card(
     return ft.Container(
         col={"xs": 12, "md": 4},
         bgcolor=COLORS["white"],
+        border=ft.Border.all(1, "#EEE6D4"),
         border_radius=24,
-        padding=26,
+        padding=24,
+        shadow=CARD_SHADOW,
         content=ft.Column(
             spacing=16,
             controls=[
@@ -58,6 +66,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
     carousel = ft.Container(
         height=460,
         border_radius=28,
+        shadow=CARD_SHADOW,
         clip_behavior=ft.ClipBehavior.HARD_EDGE,
         content=ft.Stack(fit=ft.StackFit.EXPAND, expand=True, controls=[]),
     )
@@ -152,8 +161,14 @@ def main(page: ft.Page) -> None:
         return localized(ft.Text(english, **kwargs), english, chinese)
 
     chat_button = None
-    language_en = ft.Button(content="English")
-    language_zh = ft.Button(content="中文")
+    language_en = ft.Button(
+        content="English",
+        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=24)),
+    )
+    language_zh = ft.Button(
+        content="中文",
+        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=24)),
+    )
 
     def set_language(language: str, update_page: bool = True) -> None:
         nonlocal selected_language
@@ -180,6 +195,13 @@ def main(page: ft.Page) -> None:
     language_en.on_click = lambda _: set_language("en")
     language_zh.on_click = lambda _: set_language("zh")
 
+    hero_title = text(
+        "Make school healthier, happier, and full of possibility!",
+        "讓校園更健康、更有趣、更有未來！",
+        size=46,
+        weight=ft.FontWeight.W_700,
+        color=COLORS["ink"],
+    )
     hero_copy = ft.Column(
         spacing=20,
         controls=[
@@ -187,7 +209,7 @@ def main(page: ft.Page) -> None:
                 padding=ft.Padding.symmetric(horizontal=16, vertical=10),
                 border_radius=30,
                 bgcolor=COLORS["sun"],
-                content=text(
+                content=                text(
                     "STUDENT REPRESENTATIVE ELECTION  ·  CANDIDATE NO. 1",
                     "學生代表選舉  ·  1 號候選人",
                     size=15,
@@ -195,23 +217,16 @@ def main(page: ft.Page) -> None:
                     color=COLORS["ink"],
                 ),
             ),
+            hero_title,
             text(
-                "讓校園更健康、更有趣、更有未來！",
-                "讓校園更健康、更有趣、更有未來！",
-                size=46,
-                weight=ft.FontWeight.W_700,
-                color=COLORS["ink"],
-            ),
-            text(
-                "我是陳威倫（1號）。\n"
-                "透過健康水果點心、200點購物激勵與戶外課程，\n"
-                "讓每位同學每天都充滿活力與學習動力。",
+                "I’m Chen Weilun, candidate No. 1.\n"
+                "I’ll champion healthy fruit snacks, 200 shopping points, and more outdoor classes.",
                 "我是陳威倫（1號）。\n"
                 "透過健康水果點心、200點購物激勵與戶外課程，\n"
                 "讓每位同學每天都充滿活力與學習動力。",
                 size=18,
                 color=COLORS["muted"],
-                text_align=ft.TextAlign.CENTER,
+                text_align=ft.TextAlign.LEFT,
             ),
             ft.Row(
                 wrap=True,
@@ -289,10 +304,11 @@ def main(page: ft.Page) -> None:
     def update_responsive_image(_=None) -> None:
         page_width = getattr(page, "width", None) or 1024
         is_mobile = page_width < 768
+        hero_title.size = 32 if is_mobile else 46
         hero_image.height = 300 if is_mobile else 390
         hero_photo.width = min(
             560,
-            max(280, page_width - 32 if is_mobile else (page_width - 62) / 2),
+            max(240, page_width - 64 if is_mobile else (page_width - 112) / 2),
         )
         hero_photo.height = hero_image.height
 
@@ -349,12 +365,43 @@ def main(page: ft.Page) -> None:
         ],
     )
 
+    promises_section = ft.Container(
+        padding=ft.Padding.symmetric(horizontal=16, vertical=36),
+        bgcolor="#F4EEDC",
+        content=ft.Column(
+            spacing=24,
+            controls=[
+                ft.Column(
+                    spacing=8,
+                    controls=[
+                        text(
+                            "Ideas for a better school day",
+                            "讓每一天的校園生活更美好",
+                            size=30,
+                            weight=ft.FontWeight.W_700,
+                            color=COLORS["ink"],
+                        ),
+                        text(
+                            "Three practical ideas focused on students' everyday lives.",
+                            "三項貼近日常、以學生為本的實際政見。",
+                            size=16,
+                            color=COLORS["muted"],
+                        ),
+                    ],
+                ),
+                promises,
+            ],
+        ),
+    )
+
     webllm_section = ft.Container(
         padding=ft.Padding.symmetric(horizontal=16, vertical=24),
         content=ft.Container(
             padding=20,
             border_radius=26,
             bgcolor=COLORS["white"],
+            border=ft.Border.all(1, "#EEE6D4"),
+            shadow=CARD_SHADOW,
             content=ft.Column(
                 spacing=16,
                 controls=[
@@ -446,14 +493,14 @@ def main(page: ft.Page) -> None:
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     controls=[
                         text(
-                            "為什麼選擇 1 號？",
+                            "Why choose No. 1?",
                             "為什麼選擇 1 號？",
                             size=36,
                             weight=ft.FontWeight.W_700,
                             color=COLORS["ink"],
                         ),
                         text(
-                            "參考競選影片 — 讓校園生活更健康、更有趣、更有機會",
+                            "A healthier, more engaging school day with more opportunities.",
                             "參考競選影片 — 讓校園生活更健康、更有趣、更有機會",
                             size=17,
                             color=COLORS["muted"],
@@ -466,20 +513,25 @@ def main(page: ft.Page) -> None:
                     controls=[
                         ft.Container(
                             col={"xs": 12, "sm": 4},
+                            padding=20,
+                            border=ft.Border.all(1, "#EEE6D4"),
+                            border_radius=24,
+                            bgcolor=COLORS["white"],
+                            shadow=CARD_SHADOW,
                             content=ft.Column(
                                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                 spacing=16,
                                 controls=[
                                     ft.Icon(ft.Icons.APPLE, size=64, color=COLORS["coral"]),
                                     text(
-                                        "健康活力",
+                                        "Healthy and energized",
                                         "健康活力",
                                         size=22,
                                         weight=ft.FontWeight.BOLD,
                                         color=COLORS["ink"],
                                     ),
                                     text(
-                                        "每日提供新鮮水果點心\n讓同學上課更有精神",
+                                        "Fresh fruit snacks to help students stay energized.",
                                         "每日提供新鮮水果點心\n讓同學上課更有精神",
                                         size=15,
                                         color=COLORS["muted"],
@@ -490,20 +542,25 @@ def main(page: ft.Page) -> None:
                         ),
                         ft.Container(
                             col={"xs": 12, "sm": 4},
+                            padding=20,
+                            border=ft.Border.all(1, "#EEE6D4"),
+                            border_radius=24,
+                            bgcolor=COLORS["white"],
+                            shadow=CARD_SHADOW,
                             content=ft.Column(
                                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                 spacing=16,
                                 controls=[
                                     ft.Icon(ft.Icons.REDEEM, size=64, color=COLORS["sun"]),
                                     text(
-                                        "學習激勵",
+                                        "A little learning boost",
                                         "學習激勵",
                                         size=22,
                                         weight=ft.FontWeight.BOLD,
                                         color=COLORS["ink"],
                                     ),
                                     text(
-                                        "購買文具或書籍\n立即獲得200點購物點數",
+                                        "Earn 200 shopping points when buying school supplies or books.",
                                         "購買文具或書籍\n立即獲得200點購物點數",
                                         size=15,
                                         color=COLORS["muted"],
@@ -514,20 +571,25 @@ def main(page: ft.Page) -> None:
                         ),
                         ft.Container(
                             col={"xs": 12, "sm": 4},
+                            padding=20,
+                            border=ft.Border.all(1, "#EEE6D4"),
+                            border_radius=24,
+                            bgcolor=COLORS["white"],
+                            shadow=CARD_SHADOW,
                             content=ft.Column(
                                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                 spacing=16,
                                 controls=[
                                     ft.Icon(ft.Icons.PARK, size=64, color=COLORS["teal"]),
                                     text(
-                                        "多元探索",
+                                        "Explore and discover",
                                         "多元探索",
                                         size=22,
                                         weight=ft.FontWeight.BOLD,
                                         color=COLORS["ink"],
                                     ),
                                     text(
-                                        "增加戶外課程\n走出教室、親近自然、快樂學習",
+                                        "More outdoor classes to learn beyond the classroom.",
                                         "增加戶外課程\n走出教室、親近自然、快樂學習",
                                         size=15,
                                         color=COLORS["muted"],
@@ -542,6 +604,54 @@ def main(page: ft.Page) -> None:
         ),
     )
 
+    hero_section = ft.Container(
+        padding=ft.Padding.symmetric(horizontal=16, vertical=28),
+        content=ft.Container(
+            padding=24,
+            border=ft.Border.all(1, "#EEE6D4"),
+            border_radius=30,
+            bgcolor=COLORS["white"],
+            shadow=CARD_SHADOW,
+            content=ft.ResponsiveRow(
+                spacing=30,
+                run_spacing=28,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                controls=[
+                    ft.Container(col={"xs": 12, "md": 6}, content=hero_copy),
+                    ft.Container(col={"xs": 12, "md": 6}, content=hero_image),
+                ],
+            ),
+        ),
+    )
+    campaign_carousel = create_carousel(page)
+    carousel_section = ft.Container(
+        padding=ft.Padding.symmetric(horizontal=16, vertical=24),
+        content=ft.Column(
+            spacing=18,
+            controls=[
+                ft.Column(
+                    spacing=6,
+                    controls=[
+                        text(
+                            "Campaign highlights",
+                            "競選花絮",
+                            size=30,
+                            weight=ft.FontWeight.W_700,
+                            color=COLORS["ink"],
+                        ),
+                        text(
+                            "A few moments from the campaign video.",
+                            "從競選影片看看活動中的點滴。",
+                            size=16,
+                            color=COLORS["muted"],
+                        ),
+                    ],
+                ),
+                campaign_carousel,
+            ],
+        ),
+    )
+
     content = ft.Column(
         spacing=0,
         scroll=ft.ScrollMode.AUTO,
@@ -549,25 +659,30 @@ def main(page: ft.Page) -> None:
         controls=[
             # 導覽區 - 讓第一次進來的人清楚知道如何操作
             ft.Container(
-                padding=ft.Padding.symmetric(horizontal=16, vertical=20),
-                bgcolor=COLORS["sun"],
+                padding=ft.Padding.symmetric(horizontal=16, vertical=10),
+                bgcolor="#FFF0B8",
                 content=ft.Row(
                     alignment=ft.MainAxisAlignment.CENTER,
                     controls=[
-                        ft.Icon(ft.Icons.NAVIGATE_NEXT, color=COLORS["ink"], size=28),
+                        ft.Icon(ft.Icons.ARROW_DOWNWARD, color=COLORS["ink"], size=18),
                         text(
-                            "↓ 向下捲動探索完整競選內容 ↓",
-                            "↓ 向下捲動探索完整競選內容 ↓",
-                            size=18,
+                            "Scroll to explore the campaign",
+                            "向下捲動，探索完整競選內容",
+                            size=14,
                             weight=ft.FontWeight.BOLD,
                             color=COLORS["ink"],
                         ),
-                        ft.Icon(ft.Icons.NAVIGATE_NEXT, color=COLORS["ink"], size=28),
+                        ft.Icon(ft.Icons.ARROW_DOWNWARD, color=COLORS["ink"], size=18),
                     ],
                 ),
             ),
             ft.Container(
-                padding=ft.Padding.symmetric(horizontal=16, vertical=16),
+                margin=12,
+                padding=ft.Padding.symmetric(horizontal=20, vertical=14),
+                bgcolor=COLORS["white"],
+                border=ft.Border.all(1, "#EEE6D4"),
+                border_radius=22,
+                shadow=CARD_SHADOW,
                 content=ft.ResponsiveRow(
                     spacing=12,
                     run_spacing=10,
@@ -626,55 +741,18 @@ def main(page: ft.Page) -> None:
                     ],
                 ),
             ),
-            create_carousel(page),  # 新增豐富輪播圖
-            why_choose_section,     # 新增引導區
+            hero_section,
+            promises_section,
+            carousel_section,
+            why_choose_section,
             webllm_section,
-            ft.Container(
-                padding=ft.Padding.symmetric(horizontal=16, vertical=32),
-                content=ft.ResponsiveRow(
-                    spacing=30,
-                    run_spacing=28,
-                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                    controls=[
-                        ft.Container(col={"xs": 12, "md": 6}, content=hero_copy),
-                        ft.Container(col={"xs": 12, "md": 6}, content=hero_image),
-                    ],
-                ),
-            ),
-            ft.Container(
-                padding=ft.Padding.symmetric(horizontal=16, vertical=32),
-                bgcolor="#F4EEDC",
-                content=ft.Column(
-                    spacing=24,
-                    controls=[
-                        ft.Column(
-                            spacing=8,
-                            controls=[
-                                text(
-                                    "Ideas for a better school day",
-                                    "讓每一天的校園生活更美好",
-                                    size=30,
-                                    weight=ft.FontWeight.W_700,
-                                    color=COLORS["ink"],
-                                ),
-                                text(
-                                    "Three practical ideas focused on students' everyday lives.",
-                                    "三項貼近日常、以學生為本的實際政見。",
-                                    size=16,
-                                    color=COLORS["muted"],
-                                ),
-                            ],
-                        ),
-                        promises,
-                    ],
-                ),
-            ),
             ft.Container(
                 padding=ft.Padding.symmetric(horizontal=16, vertical=32),
                 content=ft.Container(
                     padding=ft.Padding.symmetric(horizontal=20, vertical=24),
-                    border_radius=26,
+                    border_radius=30,
                     bgcolor=COLORS["ink"],
+                    shadow=CARD_SHADOW,
                     content=ft.Row(
                         wrap=True,
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -768,7 +846,7 @@ def main(page: ft.Page) -> None:
 if __name__ == "__main__":
     ft.run(
         main,
-        host="0.0.0.0",
+        host=os.environ.get("FLET_SERVER_IP", "127.0.0.1"),
         port=int(os.environ.get("PORT", 8080)),
         view=ft.AppView.WEB_BROWSER,
         assets_dir="assets",
