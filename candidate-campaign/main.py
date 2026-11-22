@@ -111,7 +111,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
                     media,
                     ft.Container(
                         padding=40,
-                                    bgcolor="#000000AA",
+                        bgcolor="#000000AA",
                         border_radius=28,
                         content=ft.Column(
                             spacing=12,
