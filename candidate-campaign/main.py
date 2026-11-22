@@ -752,9 +752,8 @@ def main(page: ft.Page) -> None:
     page.add(content)
 
     # 新增回到頂部按鈕
-    def scroll_to_top(e):
-        page.scroll_to(offset=0, duration=800)
-        page.update()
+    async def scroll_to_top(_):
+        await content.scroll_to(offset=0, duration=800)
 
     back_to_top = ft.FloatingActionButton(
         icon=ft.Icons.ARROW_UPWARD,
