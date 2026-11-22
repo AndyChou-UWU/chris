@@ -53,32 +53,13 @@ def promise_card(
 
 def create_carousel(page: ft.Page) -> ft.Container:
     """豐富主畫面輪播圖，參考影片政見：健康、活力、戶外學習"""
-    slides_data = [
-        (
-            "candidate.jpg",
-            "陳威倫 — 1號候選人",
-            "活力、健康、民主校園從我開始！",
-            None,
-        ),
-        (
-            "main_picture.png",
-            "競選影片精華",
-            "健康水果點心 · 200點購物點數 · 更多戶外課程",
-            None,
-        ),
-        (
-            "candidate.jpg",
-            "讓每一天校園生活更精彩",
-            "健康、趣味、多元學習機會",
-            None,
-        ),
-    ]
+    slides_data = ["carousel-1.png", "carousel-2.png", "carousel-3.png"]
 
     carousel = ft.Container(
         height=460,
         border_radius=28,
         clip_behavior=ft.ClipBehavior.HARD_EDGE,
-        content=ft.Stack(expand=True, controls=[]),
+        content=ft.Stack(fit=ft.StackFit.EXPAND, expand=True, controls=[]),
     )
 
     indicators = ft.Row(
@@ -98,7 +79,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
         carousel.update()
 
     slide_containers = []
-    for i, (src, title, subtitle, is_video) in enumerate(slides_data):
+    for i, src in enumerate(slides_data):
         media = ft.Image(
             src=src,
             fit=ft.BoxFit.COVER,
@@ -107,49 +88,8 @@ def create_carousel(page: ft.Page) -> ft.Container:
 
         slide = ft.Container(
             content=ft.Stack(
-                controls=[
-                    media,
-                    ft.Container(
-                        padding=20,
-                        bgcolor="#173E43D9",
-                        border_radius=28,
-                        content=ft.Column(
-                            spacing=10,
-                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                            controls=[
-                                ft.Container(
-                                    padding=ft.Padding.symmetric(
-                                        horizontal=18, vertical=10
-                                    ),
-                                    bgcolor=COLORS["sun"],
-                                    border_radius=18,
-                                    content=ft.Text(
-                                        title,
-                                        size=30,
-                                        weight=ft.FontWeight.W_900,
-                                        color=COLORS["ink"],
-                                        text_align=ft.TextAlign.CENTER,
-                                    ),
-                                ),
-                                ft.Container(
-                                    padding=ft.Padding.symmetric(
-                                        horizontal=16, vertical=9
-                                    ),
-                                    bgcolor=COLORS["white"],
-                                    border_radius=14,
-                                    content=ft.Text(
-                                        subtitle,
-                                        size=16,
-                                        color=COLORS["teal"],
-                                        text_align=ft.TextAlign.CENTER,
-                                        weight=ft.FontWeight.W_600,
-                                    ),
-                                ),
-                            ],
-                        ),
-                        alignment=ft.Alignment(0, 0.8),
-                    ),
-                ]
+                fit=ft.StackFit.EXPAND,
+                controls=[media],
             ),
             visible=(i == 0),
             expand=True,

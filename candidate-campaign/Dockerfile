@@ -21,7 +21,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py ./
-COPY assets/campaign.mp4 assets/candidate.jpg ./assets/
+COPY assets/campaign.mp4 assets/candidate.jpg assets/carousel-1.png assets/carousel-2.png assets/carousel-3.png ./assets/
 COPY --from=frontend-build /app/assets/webllm ./assets/webllm
 
 EXPOSE 7860
