@@ -75,7 +75,7 @@ def create_carousel(page: ft.Page) -> ft.Container:
     ]
 
     carousel = ft.Container(
-        height=560,
+        height=460,
         border_radius=28,
         clip_behavior=ft.ClipBehavior.HARD_EDGE,
         content=ft.Stack(expand=True, controls=[]),
@@ -110,26 +110,40 @@ def create_carousel(page: ft.Page) -> ft.Container:
                 controls=[
                     media,
                     ft.Container(
-                        padding=40,
-                        bgcolor="#000000CC",
+                        padding=20,
+                        bgcolor="#173E43D9",
                         border_radius=28,
                         content=ft.Column(
-                            spacing=12,
+                            spacing=10,
                             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                             controls=[
-                                ft.Text(
-                                    title,
-                                    size=44,
-                                    weight=ft.FontWeight.W_900,
-                                    color="#FFEBB5",
-                                    text_align=ft.TextAlign.CENTER,
+                                ft.Container(
+                                    padding=ft.Padding.symmetric(
+                                        horizontal=18, vertical=10
+                                    ),
+                                    bgcolor=COLORS["sun"],
+                                    border_radius=18,
+                                    content=ft.Text(
+                                        title,
+                                        size=30,
+                                        weight=ft.FontWeight.W_900,
+                                        color=COLORS["ink"],
+                                        text_align=ft.TextAlign.CENTER,
+                                    ),
                                 ),
-                                ft.Text(
-                                    subtitle,
-                                    size=19,
-                                    color="white",
-                                    text_align=ft.TextAlign.CENTER,
-                                    weight=ft.FontWeight.W_500,
+                                ft.Container(
+                                    padding=ft.Padding.symmetric(
+                                        horizontal=16, vertical=9
+                                    ),
+                                    bgcolor=COLORS["white"],
+                                    border_radius=14,
+                                    content=ft.Text(
+                                        subtitle,
+                                        size=16,
+                                        color=COLORS["teal"],
+                                        text_align=ft.TextAlign.CENTER,
+                                        weight=ft.FontWeight.W_600,
+                                    ),
                                 ),
                             ],
                         ),
