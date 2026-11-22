@@ -764,8 +764,8 @@ def main(page: ft.Page) -> None:
 if __name__ == "__main__":
     ft.run(
         main,
-        host="127.0.0.1",
-        port=8080,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8080)),
         view=ft.AppView.WEB_BROWSER,
         assets_dir="assets",
     )
